@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Python IDE</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <style>
+        #editor {
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Python IDE</h1>
+    <input type="text" id="queryBox" placeholder="Enter your query here...">
+    <div id="editor"></div>
+    <button onclick="runCode()">Run</button>
+    <div id="output"></div>
+    
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/python");
+        
+        function runCode() {
+            var code = editor.getValue();
+            var query = document.getElementById('queryBox').value;
+
+            // Send 'code' and 'query' to your backend here...
+        }
+    </script>
+</body>
+</html>
