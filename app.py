@@ -6,6 +6,11 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-@app.route('/static/<path:path>')
-def send_static(path):
-    return send_from_directory('static', path)
+@app.route('/send', methods=['POST'])
+def send():
+    data = request.form['data']
+    print(f"Received data: {data}")
+    return "Success", 200
+
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -1,32 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Python IDE</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
-    <style>
+    <title>ACE in Action</title>
+    <style type="text/css" media="screen">
+        #container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        #text-input, #output {
+            flex: 1;
+        }
         #editor {
-            height: 300px;
+            flex: 2;
+            height: 0;  /* Needed to initialize ACE correctly */
         }
     </style>
 </head>
 <body>
-    <h1>Python IDE</h1>
-    <input type="text" id="queryBox" placeholder="Enter your query here...">
-    <div id="editor"></div>
-    <button onclick="runCode()">Run</button>
-    <div id="output"></div>
-    
+    <div id="container">
+        <div id="text-input">
+            <input type="text" id="input-box" style="width: 100%;">
+            <button id="send-button">Send</button>
+        </div>
+        <div id="editor">def hello():\n    print('Hello, world!')</div>
+        <div id="output"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/mode-python.js" type="text/javascript" charset="utf-8"></script>
+
     <script>
         var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/python");
-        
-        function runCode() {
-            var code = editor.getValue();
-            var query = document.getElementById('queryBox').value;
-
-            // Send 'code' and 'query' to your backend here...
-        }
+        editor.setTheme("ace/theme/twilight");
+        var PythonMode = ace.require("ace/mode/python").Mode;
+        editor.session.setMode(new PythonMode());
     </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $("#send-button").click(function(){
+            $.post("/send", {data: $("#input-box").val()}, function(data, status){
+                console.log("Data: " + data + "\nStatus: " + status);
+            });
+        });
+    </script>
+
 </body>
 </html>
