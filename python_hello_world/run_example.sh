@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
-source ../.env
+
+source .env
+echo $JUDGE0_BASE64_CMD
+
+
 
 function generate_request_body() {
     cat << EOF
 {
-    "source_code": "$(cat main.py | $JUDGE0_BASE64_CMD -w0 -)",
+    "source_code": "$(cat sample.py | $JUDGE0_BASE64_CMD -w0 -)",
     "language_id": 25
 }
 EOF

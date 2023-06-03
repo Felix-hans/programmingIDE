@@ -48,7 +48,13 @@
 
         $("#send-button").click(function(){
             // Update the content of the Ace editor
-            editor.setValue($("#input-box").val(), -1);
+            // editor.setValue($("#input-box").val(), -1);
+            $.post("/send", {data: $("#input-box").val()}, function(response){
+            // Update the content of the Ace editor with the response from the Flask app
+                editor.setValue(response, -1);
+            });
+
+            
         });
 
         $("#send-editor-button").click(function(){
@@ -61,3 +67,5 @@
     </script>
 </body>
 </html>
+
+

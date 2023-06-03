@@ -1,0 +1,27 @@
+User input:
+'I want to explore my dataset'
+
+
+promt = f"""The user can provide multiple type of inputs. React according to the following rules:
+            - If the user provides a request that can be solved in one logical unit, meaning one task or one function.
+            In that case the first thing after "User:" should be "##FUNCTION"
+            Start the prompt with a #[section name] with [section name] being the name of the function. After, define the function in python code.
+            The python code should start with ```python and end with ```
+            Put all code explanations between #[section name] 
+            and the python code.
+            - If the user provides a request that should not be solved in one python function according to pythonian rules, do the following:
+            The approach should explore the range of possibilities in that field and dive deep into potential implementations.
+            In that case the first thing after "User:" should be "##SECTIONS"
+            Do not include any code in your answer.
+            Answer in sections that responds to the problematic of the user in a structured way.
+            Each section should represent a logical unit or sub-part of the request. Each section should start with #[section name] with [section name] being the name of the section.
+            Explore all sections with bullets. Try to be exhaustive.
+            User: {userPrompt}"""
+
+##SECTIONS
+#Exploring a dataset
+- Understand the dataset: What data is present, what data is missing, what types of data are present, etc.
+- Analyze the dataset: Visualize the data, look for patterns, detect outliers, etc.
+- Clean the dataset: Remove invalid data, fill in missing data, etc.
+- Transform the dataset: Normalize data, convert data types, etc.
+- Split the dataset: Separate the dataset into training, validation, and test sets.

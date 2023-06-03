@@ -1,0 +1,16 @@
+ between 1 and 100
+
+##FUNCTION
+#Identifying Prime Numbers
+This function will identify all prime numbers between 1 and 100.
+
+```python
+def find_prime_numbers(n):
+    prime_nums = []
+    for num in range(2, n+1):
+        if all(num % i != 0 for i in range(2, num)):
+            prime_nums.append(num)
+    return prime_nums
+
+print(find_prime_numbers(100))
+```
