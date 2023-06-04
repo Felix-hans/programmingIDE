@@ -33,21 +33,31 @@ def process_string(input_string):
         output.append(process_command(current_command, current_content.strip()))
 
     # Load existing json file
-    with open('/Users/fhans/Documents/GenerativeBenchmarking/programmingIDE/wineQuality_project/test3.ipynb', 'r') as json_file:
+    with open('/Users/fhans/Documents/GenerativeBenchmarking/programmingIDE/wineQuality_project/test2.ipynb', 'r') as json_file:
         data = json.load(json_file)
         # data = json.loads(json_file.read())
 
     # Insert output
-    data['cells'] = output
-
+    print(type(data['cells']))
+    print(len(data['cells']))
+    print(str(data))
+    if len(data['cells']) == 0:
+        data['cells'] = output
+    else:
+      data['cells'] += output
+    print(output)
+    print('here is data')
     print(str(data))
 
     # write output to the json file
-    with open('/Users/fhans/Documents/GenerativeBenchmarking/programmingIDE/wineQuality_project/test1.ipynb','w',encoding='UTF8') as json_file:
+    with open('/Users/fhans/Documents/GenerativeBenchmarking/programmingIDE/wineQuality_project/test2.ipynb','w',encoding='UTF8') as json_file:
         # json_file.write(str(data))
         json.dump(data, json_file, indent=2)
 
 def process_command(command, content):
+    print('commander')
+    print(command)
+    print(content)
     if command == 'SECTION':
         return {
           "cell_type": "markdown",
@@ -72,6 +82,15 @@ def process_command(command, content):
           "outputs": [],
           "source": [
             f"{content}"
+          ]
+        }
+    #In case something still reaches this but has no command
+    else:
+        return {
+          "cell_type": "markdown",
+          "metadata": {},
+          "source": [
+            f"## {content}"
           ]
         }
 

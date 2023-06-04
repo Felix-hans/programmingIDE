@@ -4,7 +4,7 @@ import editJupyter
 
 class PromptGPT:
     def __init__(self, config_path, output_path):
-        openai.api_key = "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"
+        openai.api_key = "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"
         with open(config_path, 'r') as file:
             self.config = yaml.safe_load(file)
         self.output_path = output_path
@@ -14,7 +14,8 @@ class PromptGPT:
                         {"role": "user", "content": "I have columns acidity (int), location (string) and quality(int) 1-10"},
                         {"role": "assistant", "content": "#USER I would suggest starting with analyzing the data and determining: 1. Descriptive Statistics: calculate and view means 2. Boxplots: identify outliers and get distribution 3. Correlations: Identify linear relationships"},
                         {"role": "user", "content": "That sounds good, lets do it"},
-                        {"role": "assistant", "content": "#SECTION Load Data #CODE import pandas as pd pd.read_csv('data.csv') #SECTION Data Analysis ##SUBSECTION Descriptive statistics #CODE #Calculate descriptive statistics desc_stats = df.describe() print(desc_stats)"}]
+                        {"role": "assistant", "content": "#SECTION Load Data #USER Here is the code for reading a dataframe and calculating summary statistics #CODE \nimport pandas as pd\n pd.read_csv('data.csv')\n #SECTION Data Analysis ##SUBSECTION Descriptive statistics #CODE \n #Calculate descriptive statistics\n desc_stats = df.describe()\n print(desc_stats)\n"}]
+        
         # self.data = json.loads(self.config['FEW_SHOTS'])
 
 
@@ -43,8 +44,10 @@ class PromptGPT:
     def main(self, userPrompt):
         self.generate_prompt(userPrompt)
         
-        response = "#SECTION Identify Primes"
+        response = "#SECTION Identify Primes with Different Approach #USER Sure, here's another implementation that uses the square root to check for prime numbers. #CODE\n\nimport math\n\ndef is_prime(num):\n  if num <= 1:\n    return False\n  \n  max_divisor = math.floor(math.sqrt(num))\n  \n  for i in range(2, 1 + max_divisor):\n    if num % i == 0:\n      return False\n  \n  return True\n\n#testing the function on simple cases\n\nfor i in range(20):\n  if is_prime(i):\n    print(i)"
+
         
+        """
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=self.messages
@@ -52,10 +55,13 @@ class PromptGPT:
         
 
         print("HERE")
+        print(response)
         print(response['choices'][0]['message']['content'])
-
+        
         self.logResponse(response['choices'][0]['message']['content'])
         
 
         return response['choices'][0]['message']['content']
 
+        """
+        self.logResponse(response)
