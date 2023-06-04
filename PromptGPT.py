@@ -4,9 +4,10 @@ import editJupyter
 
 class PromptGPT:
     def __init__(self, config_path, output_path):
-        openai.api_key = "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"
+        
         with open(config_path, 'r') as file:
             self.config = yaml.safe_load(file)
+        openai.api_key = self.config['OPENAI_KEY']
         self.output_path = output_path
         self.messages = [{"role": "system", "content": self.config['SYSTEM_VAR']},
                         {"role": "user", "content": "I want to predict wine quality"},
@@ -33,7 +34,8 @@ class PromptGPT:
         #Super hacky and requires to give access to VSCode in the confidentiality settings but the easiest way
         editJupyter.saveFile()
 
-        editJupyter.process_string(response)
+        #Ok the cell Dict still needs to be added to the identity's memory
+        cellDict = editJupyter.process_string(response)
 
         with open(self.output_path,'w',encoding='UTF8') as f:
             f.write(str(self.messages))

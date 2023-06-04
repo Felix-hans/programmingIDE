@@ -9,6 +9,19 @@ def saveFile():
       pyautogui.hotkey('command', 's')
       
 
+def logJupyter(cells):
+    ordered_dict = {}
+
+    #we take the content of each cell
+    for i, item in enumerate(cells):
+        source = item.get("source", [])  # default to empty list if 'source' not found
+        ordered_dict[i] = "\n".join(source)  # join all elements of the source list
+
+    return ordered_dict
+      
+      
+
+
 def process_string(input_string):
     commands = ['SECTION', 'SUBSECTION', 'CODE', 'USER']
     current_command = None
@@ -38,26 +51,24 @@ def process_string(input_string):
         # data = json.loads(json_file.read())
 
     # Insert output
-    print(type(data['cells']))
-    print(len(data['cells']))
-    print(str(data))
+
     if len(data['cells']) == 0:
         data['cells'] = output
     else:
-      data['cells'] += output
-    print(output)
-    print('here is data')
-    print(str(data))
+        data['cells'] += output
+
+    #We want to save the entire current jupyter file as a dictionary to give it the identity to read
+    cellDict = logJupyter(data['cells'])
 
     # write output to the json file
     with open('/Users/fhans/Documents/GenerativeBenchmarking/programmingIDE/wineQuality_project/test2.ipynb','w',encoding='UTF8') as json_file:
         # json_file.write(str(data))
         json.dump(data, json_file, indent=2)
 
+    return cellDict
+
 def process_command(command, content):
-    print('commander')
-    print(command)
-    print(content)
+
     if command == 'SECTION':
         return {
           "cell_type": "markdown",

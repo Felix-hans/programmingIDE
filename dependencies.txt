@@ -1,0 +1,6 @@
+General:
+- VSCode 3
+- Confidentaltiy access of VSCODE (for saving)
+
+VSCODE extentions
+- Jupyter et al.
